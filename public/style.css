@@ -1,0 +1,289 @@
+:root {
+    /* Definição das variáveis para as cores e efeitos */
+    --bg-color: #ffffff; /* Cor de fundo geral */
+    --container-bg: #ffffff; /* Cor de fundo do container principal */
+    --text-color: #333333; /* Cor do texto */
+    --cell-bg: #ffffff; /* Cor de fundo das células */
+    --cell-border: #e0e0e0; /* Cor da borda das células */
+    --status-bg: #f8f8f8; /* Cor de fundo para o status do jogo */
+    --score-bg: #f8f8f8; /* Cor de fundo do placar */
+    --button-bg: #5c6bc0; /* Cor de fundo do botão */
+    --button-hover: #3949ab; /* Cor de fundo do botão quando hover */
+    --x-color: #f06292; /* Cor para o jogador X */
+    --o-color: #4CAF50; /* Cor para o jogador O */
+    --draw-color: #FFC107; /* Cor para empates */
+    --background-color: #ffe2f6; /* Cor de fundo geral da página */
+    --shadow-color: rgba(0, 0, 0, 0.1); /* Cor da sombra geral */
+}
+
+[data-theme="dark"] {
+    /* Tema escuro */
+    --bg-color: #121212;
+    --container-bg: #1e1e1e;
+    --text-color: #f0f0f0;
+    --cell-bg: #2d2d2d;
+    --cell-border: #444444;
+    --status-bg: #252525;
+    --score-bg: #252525;
+    --button-bg: #303f9f;
+    --button-hover: #1f237e;
+    --x-color: #ff7aa8;
+    --o-color: #66bb6a;
+    --draw-color: #FFCA28;
+    --background-color: #0a0a0a;
+    --shadow-color: rgba(0, 0, 0, 0.3);
+}
+
+* {
+    /* Resetando margin e padding e definindo o box-sizing para border-box */
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* Transição suave para mudanças de fundo, cor e borda */
+    transition: background-color .3s, color .3s, border-color .3s;
+}
+
+html, body {
+    /* Garantindo que a altura seja 100% */
+    height: 100%;
+    overflow-x: hidden; /* Impedindo overflow horizontal */
+}
+
+body {
+    /* Estilizando o corpo da página */
+    min-height: 100vh; /* Garantindo altura mínima */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--background-color); /* Usando a variável para cor de fundo */
+    color: var(--text-color); /* Usando a variável para cor do texto */
+    font-family: 'Arial', sans-serif; /* Definindo a fonte */
+    padding: 10px;
+}
+
+.background-effect {
+    /* Efeito de fundo fixo com um gradiente */
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: linear-gradient(135deg, var(--background-color) 0%, var(--container-bg) 100%);
+    z-index: -1;
+    opacity: 0.9;
+}
+
+.container {
+    /* Container principal */
+    width: 100%;
+    max-width: 600px;
+    background-color: var(--container-bg);
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px var(--shadow-color);
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.header {
+    /* Cabeçalho do jogo com o título e o botão de tema */
+    width: 100%; 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header h1 {
+    /* Estilo do título do jogo */
+    font-size: 2.5rem;
+    color: var(--text-color);
+}
+
+#theme-toggle {
+    /* Botão de alternância de tema */
+    background: none;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    color: var(--text-color);
+    padding: 5px;
+}
+
+#info {
+    /* Estilo para o status do jogo */
+    width: 100%;
+    background-color: var(--status-bg);
+    padding: 16px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+    border-left: 5px solid var(--x-color);
+}
+
+.status-player-x {
+    /* Estilo quando o jogador X está ativo */
+    border-left-color: var(--x-color);
+    background-color: rgba(240,98,146,0.1);
+}
+
+.status-player-o {
+    /* Estilo quando o jogador O está ativo */
+    border-left-color: var(--o-color);
+    background-color: rgba(76,175,80,0.1);
+}
+
+#scoreboard {
+    /* Estilo do placar */
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--score-bg);
+    padding: 16px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 5px 10px var(--shadow-color);
+}
+
+#scoreboard span {
+    /* Estilo para os itens do placar */
+    font-weight: bold;
+    font-size: 1.2rem;
+    display: inline-block;
+    text-align: center;
+}
+
+#scoreX {
+    /* Cor para o placar do jogador X */
+    color: var(--x-color);
+}
+
+#scoreO {
+    /* Cor para o placar do jogador O */
+    color: var(--o-color);
+}
+
+#scoreDraws {
+    /* Cor para o placar de empates */
+    color: var(--draw-color);
+}
+
+.board {
+    /* Estilo do tabuleiro */
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.cell {
+    /* Estilo para cada célula do tabuleiro */
+    aspect-ratio: 1/1;
+    background-color: var(--cell-bg);
+    border-radius: 20px;
+    border: 2px solid var(--cell-border);
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    font-size: 2.8rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 5px 10px var(--shadow-color);
+    transition: background 0.3s, transform 0.3s;
+}
+
+.cell:hover {
+    /* Efeito de hover nas células */
+    background-color: var(--status-bg);
+    transform: scale(1.05);
+}
+
+.cell.x {
+    /* Cor para o símbolo X */
+    color: var(--x-color);
+}
+
+.cell.o {
+    /* Cor para o símbolo O */
+    color: var(--o-color);
+}
+
+.cell.win {
+    /* Estilo para células vencedoras */
+    background-color: var(--cell-bg);
+    border: 4px solid var(--o-color);
+    box-shadow: 0 0 10px var(--o-color);
+    transform: scale(1.05);
+}
+
+#restart {
+    /* Estilo do botão de reiniciar */
+    width: 100%;
+    padding: 18px;
+    background-color: var(--button-bg);
+    color: white;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 5px 10px var(--shadow-color);
+    transition: background 0.3s, transform 0.2s;
+    margin-top: 20px;
+}
+
+#restart:hover {
+    /* Efeito de hover no botão de reiniciar */
+    background-color: var(--button-hover);
+    transform: translateY(-2px);
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+        max-width: 90%;
+    }
+
+    .header h1 {
+        font-size: 2rem;
+    }
+
+    .cell {
+        font-size: 2.2rem;
+    }
+
+    #info, #scoreboard {
+        font-size: 1rem;
+    }
+
+    #restart {
+        font-size: 1rem;
+        padding: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Responsividade para telas muito pequenas */
+    .container {
+        padding: 15px;
+    }
+
+    .cell {
+        font-size: 2rem;
+    }
+
+    #restart {
+        font-size: 0.95rem;
+        padding: 12px;
+    }
+
+    #info {
+        font-size: 0.95rem;
+    }
+
+    #scoreboard span {
+        font-size: 1rem;
+    }
+}

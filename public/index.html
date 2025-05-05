@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jogo da Velha Online</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <!-- Efeito de fundo da página -->
+  <div class="background-effect"></div>
+  <div class="page-wrapper">
+    <div class="container">
+
+      <div class="header">
+        <h1>Jogo da Velha</h1>
+        <!-- Botão de alternância de tema -->
+        <button id="theme-toggle" aria-label="Alternar tema">🌙</button>
+      </div>
+
+      <!-- Parágrafo para exibir o status do jogo -->
+      <p id="info" class="game-status status-player-x">Conectando...</p>
+
+      <!-- Área do placar com as pontuações dos jogadores X, O e o número de empates -->
+      <div id="scoreboard">
+        <span id="scoreX">X: 0</span>
+        <span id="scoreO">O: 0</span>
+        <span id="scoreDraws">Empates: 0</span>
+      </div>
+
+      <!-- Tabuleiro do jogo, com células clicáveis que serão geradas dinamicamente via JavaScript -->
+      <div id="board" class="board" tabindex="0"></div>
+
+      <!-- Botão para reiniciar o jogo -->
+      <button id="restart">Reiniciar</button>
+    </div>
+  </div>
+
+  <!-- Inclusão do script do Socket.IO para a comunicação em tempo real com o servidor -->
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="script.js"></script>
+
+  <script>
+    // Lógica para alternar entre os temas claro e escuro ao clicar no botão de alternância
+    const toggle = document.getElementById('theme-toggle');
+    toggle.addEventListener('click', () => {
+      const html = document.documentElement;
+      const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      toggle.textContent = next === 'dark' ? '☀️' : '🌙';
+    });
+  </script>
+</body>
+
+</html>
